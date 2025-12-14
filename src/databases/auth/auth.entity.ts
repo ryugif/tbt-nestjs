@@ -4,7 +4,7 @@ import { BaseModel } from '../base.model';
 import { Project } from '../project/project.entity';
 import { Task } from '../task/task.entity';
 
-@Entity()
+@Entity('users')
 export class Auth extends BaseModel {
   @Column({ type: 'varchar', length: 255 })
   name: string;

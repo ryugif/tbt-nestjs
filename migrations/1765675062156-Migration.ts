@@ -1,7 +1,7 @@
 import type { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Migration1765674161968 implements MigrationInterface {
-  name = 'Migration1765674161968';
+export class Migration1765675062156 implements MigrationInterface {
+  name = 'Migration1765675062156';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -9,6 +9,9 @@ export class Migration1765674161968 implements MigrationInterface {
     );
     await queryRunner.query(
       `CREATE TABLE "users" ("id" SERIAL NOT NULL, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, "name" character varying(255) NOT NULL, "email" character varying(300) NOT NULL, "password" character varying(300) NOT NULL, CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`,
+    );
+    await queryRunner.query(
+      `CREATE TYPE "public"."tasks_status_enum" AS ENUM('pending', 'in_progress', 'completed')`,
     );
     await queryRunner.query(
       `CREATE TABLE "tasks" ("id" SERIAL NOT NULL, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, "title" character varying(255) NOT NULL, "description" text, "status" "public"."tasks_status_enum" NOT NULL DEFAULT 'pending', "due_date" date, "assigned_to" integer, "created_by" integer, "project_id" integer, CONSTRAINT "PK_8d12ff38fcc62aaba2cab748772" PRIMARY KEY ("id"))`,
@@ -69,6 +72,7 @@ export class Migration1765674161968 implements MigrationInterface {
     );
     await queryRunner.query(`DROP TABLE "project_members"`);
     await queryRunner.query(`DROP TABLE "tasks"`);
+    await queryRunner.query(`DROP TYPE "public"."tasks_status_enum"`);
     await queryRunner.query(`DROP TABLE "users"`);
     await queryRunner.query(`DROP TABLE "projects"`);
   }

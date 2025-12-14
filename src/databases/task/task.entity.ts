@@ -14,10 +14,10 @@ export class Task extends BaseModel {
 
   @Column({
     type: 'enum',
-    enum: ['pending', 'in_progress', 'done'],
+    enum: ['pending', 'in_progress', 'completed'],
     default: 'pending',
   })
-  status: 'pending' | 'in_progress' | 'done';
+  status: 'pending' | 'in_progress' | 'completed';
 
   @Column({ type: 'date', nullable: true })
   due_date?: string | null;

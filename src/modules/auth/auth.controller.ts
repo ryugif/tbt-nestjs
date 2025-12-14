@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 import { SignInDto, SignUpDto } from './dto/auth.dto';
 import { AccessTokenGuard } from '../../guards/accessToken.guard';
 
-@Controller('auth')
+@Controller()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
